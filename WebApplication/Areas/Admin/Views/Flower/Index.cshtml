@@ -1,0 +1,66 @@
+﻿@model IEnumerable<WebApplication.Models.FlowerVM>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+
+<div class="p-4" style="border-radius:20px;">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-primary">Flower List</h2>
+        </div>
+        <div class="col-6 text-right" style="text-align:right;">
+            <a asp-action="Create" class="btn btn-primary text-white"><i class="fas fa-plus"></i> &nbsp; Create New Flower</a>
+        </div>
+    </div>
+    <br />
+    <br />
+    <table id="tblData" class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.FLowerName)</th>
+                <th>@Html.DisplayNameFor(model => model.Color)</th>
+                <th>@Html.DisplayNameFor(model => model.Price)</th>
+                <th>@Html.DisplayNameFor(model => model.StoreDate)</th>
+                <th>@Html.DisplayNameFor(model => model.StoreInventory)</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.FLowerName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Color)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                    <td>@Html.DisplayFor(modelItem => item.StoreDate)</td>
+                    <td>@Html.DisplayFor(modelItem => item.StoreInventory)</td>
+                    <td>
+                        <div class="row">
+                            <div class="col-2">
+                                <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id">
+                                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <div class="col-2">
+                                <a asp-action="Details" class="btn btn-info" asp-route-id="@item.Id">
+                                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <div class="col-2">
+                                <form asp-action="Delete" asp-route-id="@item.Id" method="post">
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this record?')">
+                                        <i class="fas fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,104 @@
+﻿@model WebApplication.Models.FlowerVM
+
+@{
+    var title = "Details Flower";
+}
+
+<form method="post" asp-action="Edit" enctype="multipart/form-data">
+    <div class="row px-2 mx-2 backgroundWhite border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-12 p-3">
+            <h2 class="text-primary">@title</h2>
+        </div>
+        <div class="col-8">
+            <div class="form-group row mb-3">
+                <div class="col-4">
+                    <label>Category</label>
+                </div>
+                <div class="col-8">
+                    @Html.DropDownListFor(m => m.CategoryId,
+                  Model.CategoryList, "-Please select a category-", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <div class="col-4">
+                    <label asp-for="FLowerName"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="FLowerName" class="form-control" readonly/>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <div class="col-4">
+                    <label asp-for="Discription"></label>
+                </div>
+                <div class="col-8">
+                    <textarea asp-for="Discription" class="form-control" cols="100" readonly></textarea>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <div class="col-4">
+                    <label asp-for="Color"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Color" readonly/>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <div class="col-4">
+                    <label asp-for="Price"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Price" class="form-control" readonly/>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <div class="col-4">
+                    <label asp-for="SalePrice"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="SalePrice" class="form-control" readonly/>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <div class="col-4">
+                    <label asp-for="StoreDate"></label>
+                </div>
+                <div class="col-8">
+                    <input id="datepicker" type="text" asp-for="@Model.StoreDate" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <div class="col-4">
+                    <label asp-for="StoreInventory"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="StoreInventory" class="form-control" readonly/>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 text-right">
+            @if (@Model.Images != null)
+            {
+                var base64 = Convert.ToBase64String(@Model.Images);
+                var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                <img src="@imgsrc"/>
+            }
+        </div>
+    </div>
+</form>
+
+@section scripts{
+
+    <script>
+        $(function () {
+            $('#datepicker').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "1500:2020"
+            });
+        })
+    </script>
+}
+
+@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}

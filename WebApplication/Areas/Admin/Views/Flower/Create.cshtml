@@ -1,0 +1,123 @@
+﻿@model WebApplication.Models.FlowerVM
+
+@{
+    var title = "Create Flower";
+}
+
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+    <div class="row px-2 mx-2 backgroundWhite border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-12 p-3">
+            <h2 class="text-primary">@title</h2>
+        </div>
+        <div class="col-8">
+            <div class="form-group row mb-3">
+                <div class="col-4">
+                    <label>Category</label>
+                </div>
+                <div class="col-8">
+                    @Html.DropDownListFor(m => m.CategoryId,
+                  Model.CategoryList, "-Please select a category-", new { @class = "form-control" })
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <div class="col-4">
+                    <label asp-for="FLowerName"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="FLowerName" class="form-control" />
+                    <span asp-validation-for="FLowerName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <div class="col-4">
+                    <label asp-for="Discription"></label>
+                </div>
+                <div class="col-8">
+                    <textarea asp-for="Discription" class="form-control" cols="100"></textarea>
+                    <span asp-validation-for="Discription" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <div class="col-4">
+                    <label asp-for="Color"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="Color"
+                            asp-items="Html.GetEnumSelectList<FlowerVM.ColorType>()"
+                            class="form-control"></select>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                    <div class="col-4">
+                        <label asp-for="Images"></label>
+                    </div>
+                    <div class="col-8">
+                        <input type="file" asp-for="Images" id="projectImage" name="files" multiple class="form-control" />
+                    </div>
+            </div>
+            <div class="form-group row mb-3">
+                <div class="col-4">
+                    <label asp-for="Price"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <div class="col-4">
+                    <label asp-for="SalePrice"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="SalePrice" class="form-control" />
+                    <span asp-validation-for="SalePrice" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <div class="col-4">
+                    <label asp-for="StoreDate"></label>
+                </div>
+                <div class="col-8">
+                    @{
+                        var dateEst = DateTime.Now.ToShortDateString();
+                    }
+                    <input id="datepicker" value="@dateEst" type="text" asp-for="@Model.StoreDate" class="form-control" />
+                    <span asp-validation-for="StoreDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <div class="col-4">
+                    <label asp-for="StoreInventory"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="StoreInventory" class="form-control" />
+                    <span asp-validation-for="StoreInventory" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <input type="submit" value="Create flower" class="btn btn-success " /> <a class="btn btn-outline-secondary" asp-action="Index">Back to List</a>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+@section scripts{
+
+    <script>
+        $(function () {
+            $('#datepicker').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "1500:2020"
+            });
+        })
+    </script>
+}
+
+@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+

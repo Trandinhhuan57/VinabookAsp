@@ -1,0 +1,72 @@
+﻿@using DataAccessLayer.Contracts
+@using DataAccessLayer.Entities
+@using System.Linq
+@inject IUnitOfWork unitOfWork
+@{
+    IEnumerable<Category> categories = await unitOfWork.Categories.FindAll();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebApplication</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header class="p-3 bg-dark text-white">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-end justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap" /></svg>
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    @{
+                        foreach (var category in categories)
+                        {
+                            <li><a href="/Flower/Index/@category.Id" class="nav-link px-2 text-secondary">@category.CategoryName</a></li>
+                        }
+                    }
+                </ul>
+
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <div class="container input-group mb-3">
+                <form method="post" class="form-group d-sm-inline-flex">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</button>
+                        <div class="dropdown-menu">
+                            @foreach (var item in categories)
+                            {
+                                <a class="dropdown-item" href="#">@item.CategoryName</a>
+                            }
+                        </div>
+                    </div>
+                    <input type="text" placeholder="Flower name" class="form-control ml-2">
+                    <input type="text" placeholder="Price from" class="form-control ml-2">-
+                    <input type="text" placeholder="To" class="form-control ml-2">
+                    <input type="submit" value="Search" class="btn btn-success ml-2" />
+                </form>
+
+            </div>
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - WebApplication - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
